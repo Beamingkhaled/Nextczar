@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ما عطر CZAR القادم لك؟</title>
+  <style>
+    body {
+      background-color: #001F1F;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+    img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 10px;
+      margin: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    img:hover {
+      transform: scale(1.05);
+    }
+    .option-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .question {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .result {
+      font-size: 2em;
+      margin: 20px 0;
+    }
+    .result-image {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .option-label {
+      display: block;
+      margin-top: 5px;
+      font-size: 1.1em;
+    }
+    .restart-btn {
+      background-color: #006666;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+    .restart-btn:hover {
+      background-color: #008080;
+    }
+    .progress {
+      width: 100%;
+      background-color: #003333;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      height: 10px;
+      background-color: #008080;
+      border-radius: 5px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div id="quiz"></div>
+  </div>
+
+  <script>
+    const quizData = {
+      "questions": [
+        {
+          "id": "Q1",
+          "text": "تبون شي ليلي ولا خفيف للنهار؟",
+          "options": [
+            {
+              "text": "خفيف",
+              "next": "Q2",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0679.png?raw=true"
+            },
+            {
+              "text": "ليلي",
+              "next": "Q6",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0678.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q2",
+          "text": "تحبون سفرات المدن؟",
+          "options": [
+            {
+              "text": "المدن",
+              "next": "Q4",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0680.png?raw=true"
+            },
+            {
+              "text": "المغامرات",
+              "next": "Q5",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0681.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q4",
+          "text": "تختارون اللعب ولا حموضة؟",
+          "options": [
+            {
+              "text": "اللعب",
+              "next": "Q8",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0682.png?raw=true"
+            },
+            {
+              "text": "الحموضة و النطاعة",
+              "next": "Q9",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0683.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q5",
+          "text": "أي نوع من المغامرات؟",
+          "options": [
+            {
+              "text": "غابات و جبال",
+              "next": "Q10",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0686.png?raw=true"
+            },
+            {
+              "text": "مغامرة ثلجية دافية",
+              "next": "Q15",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0687.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q6",
+          "text": "اختاروا سفرة",
+          "options": [
+            {
+              "text": "آسيا",
+              "next": "Q12",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0688.png?raw=true"
+            },
+            {
+              "text": "منتجع",
+              "next": "Q11",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0689.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q8",
+          "text": "ما هو مزاجك اليوم؟",
+          "options": [
+            {
+              "text": "مزاجي خفيف",
+              "next": "R1",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0691.png?raw=true"
+            },
+            {
+              "text": "مزاجي قوي",
+              "next": "R2",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0692.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q9",
+          "text": "ما الذي تفضله في العطر؟",
+          "options": [
+            {
+              "text": "العمق والغموض",
+              "next": "R3",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0693.png?raw=true"
+            },
+            {
+              "text": "الانتعاش والحيوية",
+              "next": "R4",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0694.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q10",
+          "text": "ما هو الموسم المفضل لديك؟",
+          "options": [
+            {
+              "text": "الربيع",
+              "next": "R5",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0695.png?raw=true"
+            },
+            {
+              "text": "الصيف",
+              "next": "R6",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0696.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q11",
+          "text": "ما هو المكان المفضل لديك؟",
+          "options": [
+            {
+              "text": "الشاطئ",
+              "next": "R7",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0697.png?raw=true"
+            },
+            {
+              "text": "الحديقة",
+              "next": "R8",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0698.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q12",
+          "text": "ما هو العنصر الذي تفضله؟",
+          "options": [
+            {
+              "text": "الخشب",
+              "next": "R9",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0699.png?raw=true"
+            },
+            {
+              "text": "الماء",
+              "next": "R10",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0700.png?raw=true"
+            }
+          ]
+        },
+        {
+          "id": "Q15",
+          "text": "ما هو الوقت المفضل لديك؟",
+          "options": [
+            {
+              "text": "الصباح",
+              "next": "R11",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0701.png?raw=true"
+            },
+            {
+              "text": "المساء",
+              "next": "R12",
+              "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0702.png?raw=true"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "id": "R1",
+          "name": "Butterfly",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0691.png?raw=true"
+        },
+        {
+          "id": "R2",
+          "name": "Tatiana",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0692.png?raw=true"
+        },
+        {
+          "id": "R3",
+          "name": "Anastasia",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0693.png?raw=true"
+        },
+        {
+          "id": "R4",
+          "name": "Impala",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0694.png?raw=true"
+        },
+        {
+          "id": "R5",
+          "name": "Aqua Luna",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0695.png?raw=true"
+        },
+        {
+          "id": "R6",
+          "name": "Tiger",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0696.png?raw=true"
+        },
+        {
+          "id": "R7",
+          "name": "Peak",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0697.png?raw=true"
+        },
+        {
+          "id": "R8",
+          "name": "Rose",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0698.png?raw=true"
+        },
+        {
+          "id": "R9",
+          "name": "Amber Absolute",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0699.png?raw=true"
+        },
+        {
+          "id": "R10",
+          "name": "Ocean Gravity",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0700.png?raw=true"
+        },
+        {
+          "id": "R11",
+          "name": "Gentle Fusion",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0701.png?raw=true"
+        },
+        {
+          "id": "R12",
+          "name": "Alexandra",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0702.png?raw=true"
+        },
+        {
+          "id": "R13",
+          "name": "Maria",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0703.png?raw=true"
+        },
+        {
+          "id": "R14",
+          "name": "Gardenia",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0704.png?raw=true"
+        },
+        {
+          "id": "R15",
+          "name": "Olga",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0705.png?raw=true"
+        },
+        {
+          "id": "R16",
+          "name": "Falcon",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0706.png?raw=true"
+        },
+        {
+          "id": "R17",
+          "name": "Stallion",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0707.png?raw=true"
+        },
+        {
+          "id": "R18",
+          "name": "Venom",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0708.png?raw=true"
+        },
+        {
+          "id": "R19",
+          "name": "Antelope",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0709.png?raw=true"
+        },
+        {
+          "id": "R20",
+          "name": "Pure Aoud",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0710.png?raw=true"
+        },
+        {
+          "id": "R21",
+          "name": "Sultan's Whisper",
+          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0711.png?raw=true"
+        }
+      ]
+    };
+
+    let currentQuestion = "Q1";
+    let pathTaken = [];
+    const totalQuestions = 5; // Average number of questions to reach a result
+
+    function renderQuestion(qId) {
+      currentQuestion = qId;
+      pathTaken.push(qId);
+      updateProgress();
+      
+      const container = document.getElementById("quiz");
+      container.innerHTML = "";
+      const q = quizData.questions.find(q => q.id === qId);
+      if (!q) return;
+
+      const questionEl = document.createElement("div");
+      questionEl.className = "question";
+      questionEl.textContent = q.text;
+      container.appendChild(questionEl);
+
+      const optionsEl = document.createElement("div");
+      optionsEl.className = "option-container";
+
+      q.options.forEach(opt => {
+        const optionDiv = document.createElement("div");
+        
+        const img = document.createElement("img");
+        img.src = opt.image;
+        img.alt = opt.text;
+        img.onclick = () => {
+          if (opt.next.startsWith("R")) {
+            showResult(opt.next);
+          } else {
+            renderQuestion(opt.next);
+          }
+        };
+        
+        const label = document.createElement("span");
+        label.className = "option-label";
+        label.textContent = opt.text;
+        
+        optionDiv.appendChild(img);
+        optionDiv.appendChild(label);
+        optionsEl.appendChild(optionDiv);
+      });
+
+      container.appendChild(optionsEl);
+    }
+
+    function showResult(rId) {
+      const container = document.getElementById("quiz");
+      container.innerHTML = "";
+      const r = quizData.results.find(res => res.id === rId);
+      if (!r) return;
+
+      const resultText = document.createElement("div");
+      resultText.className = "result";
+      resultText.textContent = `العطر المناسب لك هو: ${r.name}`;
+
+      const resultImg = document.createElement("img");
+      resultImg.src = r.image;
+      resultImg.className = "result-image";
+
+      const restartBtn = document.createElement("button");
+      restartBtn.className = "restart-btn";
+      restartBtn.textContent = "إعادة الاختبار";
+      restartBtn.onclick = () => {
+        pathTaken = [];
+        updateProgress();
+        renderQuestion("Q1");
+      };
+
+      container.appendChild(resultText);
+      container.appendChild(resultImg);
+      container.appendChild(restartBtn);
+    }
+
+    function updateProgress() {
+      const progress = (pathTaken.length / totalQuestions) * 100;
+      document.getElementById("progressBar").style.width = `${Math.min(progress, 100)}%`;
+    }
+
+    // Initialize the quiz
+    renderQuestion("Q1");
+  </script>
+</body>
+</html>
