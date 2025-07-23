@@ -5,10 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ما عطر CZAR القادم لك؟</title>
   <style>
+    @font-face {
+      font-family: 'Aligarh Arabic';
+      src: url('https://cdn.jsdelivr.net/gh/alaouialarabiya/fonts@main/AligarhArabic-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
     body {
-      background-color: #001F1F;
+      background-color: #0a192f;
       color: #fff;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Aligarh Arabic', 'Arial', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -24,7 +31,7 @@
     }
     img {
       width: 100%;
-      max-width: 300px;
+      max-width: 200px;
       height: auto;
       border-radius: 10px;
       margin: 10px;
@@ -51,7 +58,7 @@
       margin: 20px 0;
     }
     .result-image {
-      max-width: 400px;
+      max-width: 300px;
       margin: 0 auto;
     }
     .option-label {
@@ -86,14 +93,62 @@
       width: 0%;
       transition: width 0.5s ease;
     }
+    /* Opening screen styles */
+    .opening-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .start-btn {
+      background-color: #006666;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: background-color 0.3s;
+      font-family: 'Aligarh Arabic', 'Arial', sans-serif;
+    }
+    .start-btn:hover {
+      background-color: #008080;
+    }
+    .logo {
+      max-width: 250px;
+      margin-bottom: 30px;
+    }
+    .welcome-text {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="progress">
-      <div class="progress-bar" id="progressBar"></div>
+    <div id="opening-screen" class="opening-screen">
+      <img src="https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0771.png" alt="CZAR Logo" class="logo">
+      <div class="welcome-text">مرحبًا بكم في اختبار العطور CZAR</div>
+      <div class="description">
+        اكتشف العطر الذي يناسب شخصيتك وأسلوب حياتك من خلال الإجابة على بضعة أسئلة بسيطة
+      </div>
+      <button class="start-btn" onclick="startQuiz()">ابدأ الاختبار</button>
     </div>
-    <div id="quiz"></div>
+    
+    <div id="quiz-container" style="display: none;">
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div id="quiz"></div>
+    </div>
   </div>
 
   <script>
@@ -280,107 +335,107 @@
         {
           "id": "R1",
           "name": "Butterfly",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0691.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0771.png"
         },
         {
           "id": "R2",
           "name": "Tatiana",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0692.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0764.png"
         },
         {
           "id": "R3",
           "name": "Anastasia",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0693.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0765.png"
         },
         {
           "id": "R4",
           "name": "Impala",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0694.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0761.png"
         },
         {
           "id": "R5",
           "name": "Aqua Luna",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0695.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0772.png"
         },
         {
           "id": "R6",
           "name": "Tiger",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0696.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0773.png"
         },
         {
           "id": "R7",
           "name": "Peak",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0697.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0774.png"
         },
         {
           "id": "R8",
           "name": "Rose",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0698.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0766.png"
         },
         {
           "id": "R9",
           "name": "Amber Absolute",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0699.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0757.png"
         },
         {
           "id": "R10",
           "name": "Ocean Gravity",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0700.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0758.png"
         },
         {
           "id": "R11",
           "name": "Gentle Fusion",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0701.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0760.png"
         },
         {
           "id": "R12",
           "name": "Alexandra",
-          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/IMG_0702.png"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0775.png"
         },
         {
           "id": "R13",
           "name": "Maria",
-          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0703.png?raw=true"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0759.png"
         },
         {
           "id": "R14",
           "name": "Gardenia",
-          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0704.png?raw=true"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0768.png"
         },
         {
           "id": "R15",
           "name": "Olga",
-          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0705.png?raw=true"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0769.png"
         },
         {
           "id": "R16",
           "name": "Falcon",
-          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0706.png?raw=true"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0763.png"
         },
         {
           "id": "R17",
           "name": "Stallion",
-          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0707.png?raw=true"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0762.png"
         },
         {
           "id": "R18",
           "name": "Venom",
-          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0708.png?raw=true"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0770.png"
         },
         {
           "id": "R19",
           "name": "Antelope",
-          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0709.png?raw=true"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0776.png"
         },
         {
           "id": "R20",
           "name": "Pure Aoud",
-          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0710.png?raw=true"
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0767.png"
         },
         {
           "id": "R21",
-          "name": "Sultan's Whisper",
-          "image": "https://github.com/Beamingkhaled/Nextczar/blob/main/images/IMG_0711.png?raw=true"
+          "name": "Honeymoon",
+          "image": "https://raw.githubusercontent.com/Beamingkhaled/Nextczar/refs/heads/Gh-pages/Images/IMG_0777.png"
         }
       ]
     };
@@ -388,6 +443,12 @@
     let currentQuestion = "Q1";
     let pathTaken = [];
     const totalQuestions = 5; // Average number of questions to reach a result
+
+    function startQuiz() {
+      document.getElementById('opening-screen').style.display = 'none';
+      document.getElementById('quiz-container').style.display = 'block';
+      renderQuestion("Q1");
+    }
 
     function renderQuestion(qId) {
       currentQuestion = qId;
@@ -465,9 +526,6 @@
       const progress = (pathTaken.length / totalQuestions) * 100;
       document.getElementById("progressBar").style.width = `${Math.min(progress, 100)}%`;
     }
-
-    // Initialize the quiz
-    renderQuestion("Q1");
   </script>
 </body>
 </html>
